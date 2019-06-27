@@ -39,34 +39,3 @@ INFO Access the OpenShift web-console here: https://console-openshift-console.ap
 INFO Login to the console with user: kubeadmin, password: 5char-5char-5char-5char
 ```
 
-### Running Cluster
-
-In Route53, there will be a new, private hosted zone (for internal lookups):
-
-![Route53 private hosted zone](images/install_private_hosted_zone.png)
-
-In EC2, there will be 6 running instances:
-
-![EC2 instances after install](images/install_nodes.png)
-
-The installation creates an encrypted AMI for the bootstrap and control-plane machines.
-The encrypted AMI is [copied][encrypted-copy] from the AMI configured in the control-plane machine-API provider spec,
-which is RHCOS by default.
-The encryption uses the default EBS key for your target account and region
-(`aws kms describe-key --key-id alias/aws/ebs`).
-The encrypted AMI is deregistered by `destroy cluster`.
-
-An architecture diagram for the AWS elements created by the full installation is as depicted:
-
-![Architecture relationship of ELBs and instances](images/install_upi.svg)
-
-The nodes within the VPC utilize the internal DNS and use the Router and Internal API load balancers. External/Internet
-access to the cluster use the Router and External API load balancers. Nodes are spread equally across 3 availability
-zones.
-
-The OpenShift console is available via the kubeadmin login provided by the installer:
-
-![OpenShift web console](images/install_console.png)
-
-[cloud-install]: https://cloud.openshift.com/clusters/install
-[encrypted-copy]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIEncryption.html#create-ami-encrypted-root-snapshot
