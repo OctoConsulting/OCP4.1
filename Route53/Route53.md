@@ -16,14 +16,6 @@ submit a delegation request for a subdomain in a later step.
 Route53 can also purchase domains for you and act as a registrar. If you allow Route53 to purchase a new domain for you,
 you can skip the remainder of these steps (the domain is created and the hosted zone is created correctly for you)!
 
-### Example: Purchasing a new domain
-
-![Domain purchased in Route53 registrar](images/route53_registrar.png)
-
-Later:
-
-![Automatic hosted zone in Route53](images/route53_hosted_zone.png)
-
 ## Step 2: Create Public Hosted Zone
 
 Whether using a root domain or a subdomain, you must create a public, hosted zone.
@@ -33,9 +25,6 @@ Whether using a root domain or a subdomain, you must create a public, hosted zon
 To use the root domain, you'd create the hosted zone with the value `openshiftcorp.com`. To use a subdomain, you'd
 create a hosted zone with the value `clusters.openshiftcorp.com`. (Use appropriate domain values for your situation.)
 
-### Example: Root Domain
-
-![Create hosted zone in Route53](images/route53_create_hosted_zone.png)
 
 ## Step 3: Get Public Nameservers of Hosted Zone
 
@@ -44,9 +33,6 @@ authoritative nameservers from the hosted zone records.
 
 [AWS: Getting the Name Servers for a Public Hosted Zone][get-hosted-zone-info]
 
-### Example: Root Domain
-
-![Get hosted zone info from Route53](images/route53_hosted_zone_info.png)
 
 ## Step 4a: Root Domain - Update Registrar
 
@@ -62,9 +48,6 @@ If you are migrating your root domain to Route53, care should be taken to migrat
 
 [AWS: Making Amazon Route 53 the DNS Service for an Existing Domain][migrate-dns]
 
-### Example
-
-![Set nameservers in Route53](images/route53_set_nameservers.png)
 
 ## Step 4b: Subdomain - Perform DNS Delegation
 
@@ -88,16 +71,10 @@ $ORIGIN clusters.openshiftcorp.com.
 ### Example: Route53
 
 Following our previous example, if using entirely AWS Route 53 for the registrar, root domain and subdomain, the root
-domain (`openshiftcorp.com`) hosted zone would look like the following:
-
-![Subdomain delegation for hosted zone in Route53](images/route53_hosted_zone_delegation.png)
+domain (`openshiftcorp.com`) 
 
 The root domain would contain the authoritative information for the root domain and also identify a separate set of
 nameservers for the subdomain (the nameservers for a separate Hosted Zone in Route53)
-
-The hosted zone of the subdomain (`clusters.openshiftcorp.com`) would show:
-
-![Subdomain hosted zone in Route53](images/route53_hosted_zone_subdomain.png)
 
 [create-hosted-zone]: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html
 [get-hosted-zone-info]: https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/GetInfoAboutHostedZone.html
