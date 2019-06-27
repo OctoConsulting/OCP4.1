@@ -4,7 +4,6 @@ At this point, you are ready to perform the OpenShift installation. You have two
 AWS, Installer-Provided Infrastructure (IPI) or User-Provided Infrastructure (UPI). See below for an example of an
 IPI install.
 
-To see a guided example of a UPI install, please see [Install: User-Provided Infrastructure](install_upi.md)
 
 ## Example: Installer-Provided Infrastructure (IPI)
 
