@@ -1,0 +1,49 @@
+apiVersion: v1
+baseDomain: example.com  
+controlPlane: 
+  hyperthreading: Enabled   
+  name: master
+  platform:
+    aws:
+      zones:
+      - us-west-2a
+      - us-west-2b
+      rootVolume:
+        iops: 4000
+        size: 500
+        type: io1
+      type: m5.xlarge 
+  replicas: 3
+compute: 
+- hyperthreading: Enabled 
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: 2000
+        size: 500
+        type: io1 
+      type: c5.4xlarge
+      zones:
+      - us-west-2c
+  replicas: 3
+metadata:
+  name: test-cluster 
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineCIDR: 10.0.0.0/16
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  aws:
+    region: us-west-2 
+    userTags:
+      adminContact: admin
+pullSecret: {"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K21hdHRoZXdraW5nb2N0b2NvbnN1bHRpbmdjb20xajgwcG14Zm00ZWNuMXJnbzFpOHR5NndoaWM6M1o5SFg0UDVUMEZLSTVUSlNIM09EUVlSNzlaQzVQNlE2ODBBWkhQSERMVTc2S0VIQjFMNDlJOU00SkZXUDRGRQ==","email":"matthew.king@octoconsulting.com"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K21hdHRoZXdraW5nb2N0b2NvbnN1bHRpbmdjb20xajgwcG14Zm00ZWNuMXJnbzFpOHR5NndoaWM6M1o5SFg0UDVUMEZLSTVUSlNIM09EUVlSNzlaQzVQNlE2ODBBWkhQSERMVTc2S0VIQjFMNDlJOU00SkZXUDRGRQ==","email":"matthew.king@octoconsulting.com"},"registry.connect.redhat.com":{"auth":"NTIzNTg5MDF8dWhjLTFKODBwTVhmTTRlY04xckdvMUk4VFk2V2hpQzpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSTNOekF3WkRNMU1UUXdORGMwWVRneFltWXpPVGsxTXpjMk5ERXpNemRoWkNKOS5HZ1k1WEtseFl4ajFMNW9KendWeUpWTlBweWpPbXdQb29VdTE2TUotT3RYTjlFVTZsLW5rb1A1ekIxOTBBeHJwbGdQSVVuVVJ3bXJBMEc5eFdOUG9Od2djd3NsU3hRWXYtc2dUaF80TS1Rc2RvQUJoSlREY1ZacFlFREoxcS1ySEU2S05MQ2pDSFJhMEdKTXk0VTItRDZnQms2XzBoYUJfVFE3bVZnQUdSQnBoVWhId2daUi1ncmFHVU1rN1g5bFlFNk55cjJ3ek5VcjY4X2NUXzdadVR0anBnZ2dpcHdSUTAycXVaOW01Rk1OR1NzUHNLQ2RFNjZYeVFNR0JfY1pVQTQwYU5qajMwZUtMdG1xVGtUVDdwTnJqS21hQWFXR1RhcmRVNVo2QjFtelZyUVJvVWo1QTFQajdjRTZCQzdlSnlmTEozX0lURkJPSGk1dkp4YktCeFNXWHZQendiSTF5ZW5acXNoNHRDQXhoSm9TZlRjS3I3SFJ6ZlFMZUpnV21RVFpTU09sNExWWjdKem9td1dicDFJcmhrWGVnN1doU0FUR195YTVCQWlNbV9LbnN1S2YtUUgzV0xnUXVodHUtSWlLWXlMeTNUOVhwSHBBNGp2WG5RMTRnQmVfNnlxQXRkN2xtX0FYZm9KTEk1TmdTTWZGTVdXM1kwRjhfTngwRmM4WkozNnpTTmU0ckZkYzRqOEFUV0xwYWpncTM3aGxkYnhlN1F1dG9kTkt6eERvN2Z2QllzZHJjNXNaa2RGUW9TNF9QeWZCcTNFSzRvMWllVVFRMkt5aFBQXzc0dzhodDgzZGJRTU0wc0dNbDZuSXBhUnI1R0JUWUhrMndEcUdnSExLUVVpdnhIREJLUkdDemxoUDF0UWVOVnZoYVZJTlZlck12Q0Q1OEIyOA==","email":"matthew.king@octoconsulting.com"},"registry.redhat.io":{"auth":"NTIzNTg5MDF8dWhjLTFKODBwTVhmTTRlY04xckdvMUk4VFk2V2hpQzpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSTNOekF3WkRNMU1UUXdORGMwWVRneFltWXpPVGsxTXpjMk5ERXpNemRoWkNKOS5HZ1k1WEtseFl4ajFMNW9KendWeUpWTlBweWpPbXdQb29VdTE2TUotT3RYTjlFVTZsLW5rb1A1ekIxOTBBeHJwbGdQSVVuVVJ3bXJBMEc5eFdOUG9Od2djd3NsU3hRWXYtc2dUaF80TS1Rc2RvQUJoSlREY1ZacFlFREoxcS1ySEU2S05MQ2pDSFJhMEdKTXk0VTItRDZnQms2XzBoYUJfVFE3bVZnQUdSQnBoVWhId2daUi1ncmFHVU1rN1g5bFlFNk55cjJ3ek5VcjY4X2NUXzdadVR0anBnZ2dpcHdSUTAycXVaOW01Rk1OR1NzUHNLQ2RFNjZYeVFNR0JfY1pVQTQwYU5qajMwZUtMdG1xVGtUVDdwTnJqS21hQWFXR1RhcmRVNVo2QjFtelZyUVJvVWo1QTFQajdjRTZCQzdlSnlmTEozX0lURkJPSGk1dkp4YktCeFNXWHZQendiSTF5ZW5acXNoNHRDQXhoSm9TZlRjS3I3SFJ6ZlFMZUpnV21RVFpTU09sNExWWjdKem9td1dicDFJcmhrWGVnN1doU0FUR195YTVCQWlNbV9LbnN1S2YtUUgzV0xnUXVodHUtSWlLWXlMeTNUOVhwSHBBNGp2WG5RMTRnQmVfNnlxQXRkN2xtX0FYZm9KTEk1TmdTTWZGTVdXM1kwRjhfTngwRmM4WkozNnpTTmU0ckZkYzRqOEFUV0xwYWpncTM3aGxkYnhlN1F1dG9kTkt6eERvN2Z2QllzZHJjNXNaa2RGUW9TNF9QeWZCcTNFSzRvMWllVVFRMkt5aFBQXzc0dzhodDgzZGJRTU0wc0dNbDZuSXBhUnI1R0JUWUhrMndEcUdnSExLUVVpdnhIREJLUkdDemxoUDF0UWVOVnZoYVZJTlZlck12Q0Q1OEIyOA==","email":"matthew.king@octoconsulting.com"}}}
+sshKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFQ1QCAsBkS9b2pWsR/rxRsBijNfQn6R35K2m2YKE4TrYPbbyS1mdhw/+FR4ZYA82x6SBnAY06k5NkJlXiW7c/q8DhpAS5l+PX1RV58/olMoXU42YBbOA8XKOdbu/lNhMvAu7jLT5c1sDMq2TRP8si3+pVF7AwbEeeNKFP+T0GK
+GqD4xhilYFTL45kmSCsuAg2vY6VFUNzqW8cikGUVkq3zEOF9Em9yj7UNx/keyrGLkz9NdPJjgQukX86sG80wowHmLdY+qVkyrGtw0hDIIjCIF2G0JP8hTxyGhvDdroWEMF5LLdeS+UlVdMzmHEmdFvtolIzijX4jMQS+bw7vs3ZXavjOb6adDgE/Dw1xledDJm1DnkjTnisQnvpiS
+e9yTmWWvCpmFbsYdTVKE9/gxUL1IhGwEDeN5fyAhnCGUJaC9kNMJcaRov+MSt5tlMUe90lIQKQH9eoH903l1Jtm80qpHO4QLV1YaQcYzdpXdz4k+jLC2cud0aq9XAAtv736hIL4tJsnXsHfp1kV3dHTWkvZen2dsFVPDdpM8HHS0f/khnaTjU+kMjltciB6ii49HBU9a3ero/MGte
+qFHmxXqey0ZmYKhI13PzGv5TOfWPys0Fg/tJmWyG1Qn3dCKWcRl0sm/R1nAnlRKnm6vATKYFFp646H6HTmDduh/341fUf/Q== cloud_user@mattymatt791c.mylabserver.com
