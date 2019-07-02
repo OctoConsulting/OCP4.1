@@ -16,3 +16,4 @@ The script s3download.sh will do a few things. It logs you into the RedHat devel
 - An active RedHat developer subscription with pull secret enabled 
 
 This should create the cluster with the self-contained yaml file. 
+This defaults to us-west-2 but all of these options can be changes within the install-cluster.yaml for use in any environment. 
